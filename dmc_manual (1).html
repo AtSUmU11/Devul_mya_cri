@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEVIL MAY CRY — Hunter's Manual</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Special+Elite&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #080009;
+  color: #ccc;
+  font-family: 'Special Elite', cursive;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* grain overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.5;
+}
+
+/* diagonal bg text */
+.bg-watermark {
+  position: fixed;
+  top: 15%;
+  left: -5%;
+  font-family: 'Cinzel', serif;
+  font-size: 140px;
+  color: rgba(140, 0, 20, 0.04);
+  white-space: nowrap;
+  transform: rotate(-12deg);
+  pointer-events: none;
+  z-index: 0;
+  letter-spacing: 20px;
+  user-select: none;
+}
+
+.container {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 60px 28px 80px;
+  position: relative;
+  z-index: 1;
+}
+
+/* COVER */
+.cover {
+  text-align: center;
+  padding: 60px 0 80px;
+  border-bottom: 1px dashed #330018;
+  margin-bottom: 60px;
+  position: relative;
+}
+.cover-stamp {
+  font-size: 8px;
+  letter-spacing: 6px;
+  color: #440022;
+  margin-bottom: 18px;
+  display: block;
+  transform: rotate(-1deg);
+}
+.cover-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(28px, 6vw, 52px);
+  letter-spacing: 10px;
+  color: #900018;
+  text-shadow: 0 0 40px rgba(144,0,24,0.4);
+  transform: rotate(-1.5deg);
+  display: inline-block;
+  margin-bottom: 6px;
+}
+.cover-sub {
+  font-size: 10px;
+  letter-spacing: 6px;
+  color: #440022;
+  margin-top: 12px;
+  display: block;
+  transform: rotate(0.8deg);
+}
+.cover-line {
+  width: 60px;
+  height: 1px;
+  background: #440022;
+  margin: 24px auto;
+}
+.cover-note {
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: #330018;
+  line-height: 2;
+  max-width: 360px;
+  margin: 0 auto;
+  font-style: italic;
+}
+
+/* SECTION */
+.section {
+  margin-bottom: 64px;
+}
+.section-label {
+  font-size: 7px;
+  letter-spacing: 6px;
+  color: #440022;
+  margin-bottom: 10px;
+  display: block;
+  transform: rotate(-0.5deg);
+}
+.section-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(15px, 3vw, 22px);
+  letter-spacing: 6px;
+  color: #900018;
+  margin-bottom: 28px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed #330018;
+  text-shadow: 0 0 20px rgba(144,0,24,0.25);
+}
+
+/* ENTRY */
+.entry {
+  margin-bottom: 36px;
+  padding-left: 18px;
+  border-left: 2px solid #220010;
+  position: relative;
+}
+.entry:hover {
+  border-left-color: #660022;
+}
+.entry-trigger {
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  letter-spacing: 4px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.trigger-word {
+  color: #cc2244;
+  text-shadow: 0 0 12px rgba(200,0,40,0.4);
+}
+.trigger-word.purple { color: #9966ff; text-shadow: 0 0 12px rgba(120,60,255,0.4); }
+.trigger-word.blue   { color: #4488ff; text-shadow: 0 0 12px rgba(40,100,255,0.4); }
+.trigger-word.gold   { color: #ffcc00; text-shadow: 0 0 12px rgba(255,180,0,0.5); }
+.trigger-word.white  { color: #ffffff; text-shadow: 0 0 12px rgba(255,255,255,0.4); }
+.trigger-word.orange { color: #ff8833; text-shadow: 0 0 12px rgba(255,100,0,0.4); }
+
+.trigger-condition {
+  font-size: 8px;
+  letter-spacing: 3px;
+  color: #441122;
+  font-family: 'Special Elite', cursive;
+}
+.entry-desc {
+  font-size: 10px;
+  line-height: 2;
+  color: #997788;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+.entry-reward {
+  font-size: 8px;
+  letter-spacing: 3px;
+  color: #552233;
+  font-style: italic;
+}
+.entry-reward span {
+  color: #884455;
+}
+
+/* CHARACTER TAG */
+.char-tag {
+  display: inline-block;
+  font-size: 7px;
+  letter-spacing: 3px;
+  padding: 2px 8px;
+  border: 1px solid currentColor;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  opacity: 0.7;
+  transform: rotate(-0.5deg);
+}
+.tag-dante  { color: #900018; border-color: #440010; }
+.tag-nero   { color: #2266cc; border-color: #112244; }
+.tag-vergil { color: #7744cc; border-color: #331166; }
+.tag-all    { color: #664422; border-color: #331100; }
+
+/* DIVIDER */
+.divider {
+  border: none;
+  border-top: 1px dashed #220010;
+  margin: 48px 0;
+}
+
+/* FOOTNOTE */
+.footnote {
+  font-size: 8px;
+  letter-spacing: 2px;
+  color: #330018;
+  line-height: 2.2;
+  margin-top: 8px;
+  padding-left: 18px;
+  font-style: italic;
+}
+
+/* KEY */
+.key {
+  display: inline-block;
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: #cc2244;
+  border: 1px solid #440022;
+  padding: 1px 7px;
+  margin: 0 2px;
+  background: rgba(80,0,20,0.15);
+}
+.key.purple { color: #9966ff; border-color: #441166; background: rgba(60,0,100,0.15); }
+.key.blue   { color: #4488ff; border-color: #112244; background: rgba(0,20,60,0.15); }
+.key.gold   { color: #ffcc00; border-color: #664400; background: rgba(60,40,0,0.15); }
+
+/* TABLE */
+.table-wrap {
+  border: 1px solid #220010;
+  margin: 18px 0;
+  overflow: hidden;
+}
+.table-row {
+  display: flex;
+  border-bottom: 1px dashed #1a0010;
+  padding: 10px 14px;
+  gap: 12px;
+  align-items: baseline;
+}
+.table-row:last-child { border-bottom: none; }
+.table-row:nth-child(even) { background: rgba(60,0,20,0.08); }
+.table-col-a {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: #cc2244;
+  min-width: 130px;
+  flex-shrink: 0;
+}
+.table-col-a.purple { color: #9966ff; }
+.table-col-a.blue   { color: #4488ff; }
+.table-col-a.gold   { color: #ffcc00; }
+.table-col-a.white  { color: #ffffff; }
+.table-col-b {
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: #775566;
+  line-height: 1.8;
+}
+
+/* SPECIAL CALLOUT */
+.callout {
+  border: 1px solid #330018;
+  padding: 16px 20px;
+  margin: 24px 0;
+  background: rgba(60,0,20,0.08);
+  position: relative;
+}
+.callout::before {
+  content: '///';
+  position: absolute;
+  right: 14px;
+  top: 10px;
+  color: #330018;
+  font-size: 10px;
+  letter-spacing: 3px;
+}
+.callout-label {
+  font-size: 7px;
+  letter-spacing: 5px;
+  color: #440022;
+  margin-bottom: 8px;
+  display: block;
+}
+.callout-text {
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: #886677;
+  line-height: 2;
+}
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  padding-top: 60px;
+  border-top: 1px dashed #220010;
+  margin-top: 80px;
+}
+.footer-text {
+  font-size: 8px;
+  letter-spacing: 4px;
+  color: #330018;
+  line-height: 2.5;
+}
+.footer-title {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 6px;
+  color: #440022;
+  margin-bottom: 10px;
+}
+
+/* scratch marks on section titles */
+.section-title::after {
+  content: '';
+  display: block;
+  width: 30px;
+  height: 1px;
+  background: #900018;
+  margin-top: 6px;
+  opacity: 0.4;
+}
+
+/* subtle tilt on entries */
+.entry:nth-child(odd)  { transform: rotate(-0.2deg); }
+.entry:nth-child(even) { transform: rotate(0.15deg); }
+</style>
+</head>
+<body>
+
+<div class="bg-watermark">DEVIL MAY CRY</div>
+
+<div class="container">
+
+  <!-- COVER -->
+  <div class="cover">
+    <span class="cover-stamp">CLASSIFIED — HUNTER EYES ONLY</span>
+    <div class="cover-title">DEVIL MAY CRY</div>
+    <div class="cover-sub">— secret hunter's field manual —</div>
+    <div class="cover-line"></div>
+    <p class="cover-note">
+      this document contains every hidden secret, easter egg,
+      and unlockable moment in the game. some of these you will
+      stumble into. most you won't. that's the point.
+    </p>
+  </div>
+
+
+  <!-- KEYBOARD EASTER EGGS -->
+  <div class="section">
+    <span class="section-label">— SECTION I —</span>
+    <div class="section-title">KEYBOARD SECRETS</div>
+
+    <p class="footnote" style="margin-bottom:28px;">
+      type these words on your keyboard while playing. you have 2.5 seconds between letters before the buffer resets.
+      you don't need to press enter. it just listens.
+    </p>
+
+    <div class="entry">
+      <div class="entry-trigger">
+        <span class="trigger-word">JACKPOT</span>
+        <span class="trigger-condition">any character</span>
+      </div>
+      <div class="entry-desc">
+        triggers a 30-second orb shower. fifty orbs every second, gold slash storm,
+        floating JACKPOT text raining across the screen in different sizes. your combo
+        keeps climbing the entire time. dante would approve.
+      </div>
+      <div class="entry-reward">reward — <span>+50 orbs/sec for 30 seconds · +5 combo/sec · gold flash storm</span></div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-trigger">
+        <span class="trigger-word orange">PIZZA</span>
+        <span class="trigger-condition">any character</span>
+      </div>
+      <div class="entry-desc">
+        pizza slices and text rain down from the top of the screen, drifting to the bottom.
+        completely unhinged. very dante. includes the classic line.
+      </div>
+      <div class="entry-reward">reward — <span>+100 orbs · +500 score · +20 combo · chaos</span></div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-trigger">
+        <span class="trigger-word gold">MOTIVATED</span>
+        <span class="trigger-condition">any character</span>
+      </div>
+      <div class="entry-desc">
+        every single button label becomes "MOTIVATED!!!" for 10 seconds. maximum damage applied.
+        floating motivation text floods the screen. expires with a quiet
+        "...motivation expired." vergil would find this embarrassing.
+      </div>
+      <div class="entry-reward">reward — <span>max damage for 10s · all buttons relabelled · floating text storm</span></div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-trigger">
+        <span class="trigger-word white">SPARDA</span>
+        <span class="trigger-condition">any character</span>
+      </div>
+      <div class="entry-desc">
+        screen floods deep purple, warp hits 35. ten dark slashes tear across.
+        then the quotes: "Son of Sparda." "The Legendary Dark Knight." "...father."
+        the game briefly becomes something heavier.
+      </div>
+      <div class="entry-reward">reward — <span>+300 orbs · +2000 score · +40 combo · purple quote storm</span></div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-trigger">
+        <span class="trigger-word purple">VERGIL</span>
+        <span class="trigger-condition trigger-word" style="color:#cc2244;text-shadow:none;font-family:'Special Elite';font-size:8px;letter-spacing:3px;">while playing DANTE</span>
+      </div>
+      <div class="entry-desc">
+        vergil appears as a ghost and steals exactly half your orbs. purple slashes tear
+        through the screen. his quotes rain down — "foolishness." "pathetic."
+        "this power is mine now." lore accurate.
+      </div>
+      <div class="entry-reward">reward — <span>vergil takes 50% of your orbs. that's it. he just takes them.</span></div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-trigger">
+        <span class="trigger-word purple">VERGIL</span>
+        <span class="trigger-condition trigger-word" style="color:#7744cc;text-shadow:none;font-family:'Special Elite';font-size:8px;letter-spacing:3px;">while playing VERGIL</span>
+      </div>
+      <div class="entry-desc">
+        "..." and +40 concentration. he approves of himself. nothing else happens.
+        the restraint is the joke.
+      </div>
+      <div class="entry-reward">reward — <span>+40 concentration · one quiet ellipsis</span></div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-trigger">
+        <span class="trigger-word">DANTE</span>
+        <span class="trigger-condition trigger-word" style="color:#7744cc;text-shadow:none;font-family:'Special Elite';font-size:8px;letter-spacing:3px;">while playing VERGIL</span>
+      </div>
+      <div class="entry-desc">
+        red invasion. dante's quotes flood vergil's screen —
+        "JACKPOT!" "...bro." "pizza time." "lol."
+        concentration drops. combo bleeds. this is what vergil endures
+        every time dante opens his mouth.
+      </div>
+      <div class="entry-reward">reward — <span>-20% combo · -30 concentration · dante chaos on your screen</span></div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-trigger">
+        <span class="trigger-word blue">NERO</span>
+        <span class="trigger-condition trigger-word" style="color:#7744cc;text-shadow:none;font-family:'Special Elite';font-size:8px;letter-spacing:3px;">while playing VERGIL</span>
+      </div>
+      <div class="entry-desc">
+        "...that's my boy." +40 concentration. vergil won't admit he's proud.
+        but he gives you the concentration. that's basically the same thing.
+      </div>
+      <div class="entry-reward">reward — <span>+40 concentration · one moment of cold paternal pride</span></div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-trigger">
+        <span class="trigger-word gold">KONAMI</span>
+        <span class="trigger-condition">any character</span>
+      </div>
+      <div class="entry-desc">
+        the classic. everything maxed instantly. white flash storm, warp at 25,
+        twelve screen-wide slashes. if JACKPOT is dante's cheat code, KONAMI is dante's
+        cheat code but louder.
+      </div>
+      <div class="entry-reward">reward — <span>+9999 score · +999 orbs · +60 combo · UNLIMITED POWER</span></div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- CHARACTER EXCLUSIVE EGGS -->
+  <div class="section">
+    <span class="section-label">— SECTION I.V —</span>
+    <div class="section-title">CHARACTER EXCLUSIVE KEYBOARD SECRETS</div>
+
+    <p class="footnote" style="margin-bottom:28px;">
+      these only work as the right character. type them as anyone else and nothing happens.
+      each one is based on who the character really is.
+    </p>
+
+    <div class="entry">
+      <div class="entry-trigger">
+        <span class="trigger-word">UNEMPLOYED</span>
+        <span class="trigger-condition">dante only</span>
+      </div>
+      <div class="entry-desc">
+        dante has no job, no office, no pension plan. type this and he celebrates it.
+        "JACKPOT!!! INFINITE EVERYTHING HUURAH!!" blazes across the screen.
+        gold slash storm. then +100 orbs and +500 score every single second
+        for a full minute. he is not going to get a job. this is fine.
+      </div>
+      <div class="entry-reward">reward — <span>+99999 score · +9999 orbs · +999 combo · gold chaos for 60 seconds</span></div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-trigger">
+        <span class="trigger-word blue">DEADWEIGHTBUM</span>
+        <span class="trigger-condition">nero only</span>
+      </div>
+      <div class="entry-desc">
+        no spaces. type it all as one word. nero takes it personally and then
+        proves every single meter wrong simultaneously.
+        "INFINITE EVERYTHING METRE MAXED!!!" — rose meter, exceed gauge, everything.
+        blue slash storm. orbs and score raining for a full minute.
+        deadweight bum with maxed stats. say that again.
+      </div>
+      <div class="entry-reward">reward — <span>+99999 score · +9999 orbs · rose meter 100 · exceed 100 · blue chaos for 60 seconds</span></div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-trigger">
+        <span class="trigger-word purple">CHAIR</span>
+        <span class="trigger-condition">vergil only</span>
+      </div>
+      <div class="entry-desc">
+        just the word. vergil says "...the chair." and then cuts start spawning.
+        and spawning. and spawning. one purple slash every single second for a full minute,
+        concentration locked at 100 the entire time. infinite everything.
+        he sat in the chair and ascended. that's the whole lore.
+      </div>
+      <div class="entry-reward">reward — <span>+99999 score · +9999 orbs · concentration 100 forever · purple cuts every second for 60 seconds</span></div>
+    </div>
+
+  </div>
+
+  <hr class="divider">
+
+  <!-- STYLE RANK SECRETS -->
+  <div class="section">
+    <span class="section-label">— SECTION II —</span>
+    <div class="section-title">RANK SECRETS</div>
+
+    <div class="entry">
+      <div class="entry-trigger">
+        <span class="trigger-word gold">LDK RANK</span>
+        <span class="trigger-condition">100+ hit combo</span>
+      </div>
+      <div class="entry-desc">
+        reach 100 hits without dropping your combo and the rank letter transforms.
+        the "D" through "SSS" system ends. what appears instead is not a rank —
+        it's a title. the letter pulses between gold and white.
+        "LEGENDARY DARK KNIGHT" announces itself with a gold slash storm.
+        this is very hard to reach. that's intentional.
+      </div>
+      <div class="entry-reward">reward — <span>gold pulsing rank letter · LEGENDARY DARK KNIGHT announce · gold slash storm</span></div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-trigger">
+        <span class="trigger-word">SSS TAUNT</span>
+        <span class="trigger-condition">dante · 40+ combo · press taunt</span>
+      </div>
+      <div class="entry-desc">
+        taunting as dante while your combo is at 40 or above triggers a special visual.
+        a crimson flash, five slashes, and a massive "SMOKIN' SEXY STYLE!!!" banner
+        blazes across the screen with a full red glow. you didn't just taunt.
+        you made a statement.
+      </div>
+      <div class="entry-reward">reward — <span>crimson flash · full-screen banner · bragging rights</span></div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- JUDGEMENT CUT END VARIANTS -->
+  <div class="section">
+    <span class="section-label">— SECTION III —</span>
+    <div class="section-title">JUDGEMENT CUT END — VARIANTS</div>
+
+    <p class="footnote" style="margin-bottom:28px;">
+      vergil's seven-cut chain has three possible endings depending on
+      how you played in the moments before the final cut lands.
+      the game watches. it remembers.
+    </p>
+
+    <div class="entry">
+      <div class="entry-trigger">
+        <span class="trigger-word purple">NORMAL</span>
+        <span class="trigger-condition">default — just complete the chain</span>
+      </div>
+      <div class="entry-desc">
+        slashes build from sparse to chaotic. yamato ring tone plays and fades.
+        silence hits. white screen. "JUDGEMENT CUT END" appears.
+        the white gets cut by dark slashes until one single diagonal slash
+        crosses the entire screen corner to corner —
+        then the white dissolves into cuts and ceases to exist.
+      </div>
+      <div class="entry-reward">reward — <span>+750 score base · +90 orbs · +concentration bonus</span></div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-trigger">
+        <span class="trigger-word white" style="color:#888;">DARK VARIANT</span>
+        <span class="trigger-condition">concentration 80+ when the 7th cut lands</span>
+      </div>
+      <div class="entry-desc">
+        vergil at absolute zero emotion. the screen goes black instead of white.
+        cuts are bright white on darkness — completely inverted.
+        the ring tone drops an octave. text slams in faster and harder.
+        the single diagonal slash is pale white-purple against black.
+        cuts dissolve the darkness into nothing.
+        this is vergil when he stopped feeling anything.
+      </div>
+      <div class="entry-reward">reward — <span>+750 score base · +90 orbs · dark variant announce · glass shatters white on black</span></div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-trigger">
+        <span class="trigger-word purple">MOTIVATED VARIANT</span>
+        <span class="trigger-condition">taunted within 10 seconds before JCE fires</span>
+      </div>
+      <div class="entry-desc">
+        you said "show me your motivation." then you showed him.
+        cuts fire in a perfect geometric radial pattern — like clock spokes,
+        mathematically even, two full passes. no chaos, only precision.
+        "...this is what it means." appears first before the title.
+        the diagonal slash on the white is perfectly centred.
+        everything is controlled. this is vergil when he is genuinely impressed.
+      </div>
+      <div class="entry-reward">reward — <span>+750 score base · +90 orbs · special announce · longer silence · perfect geometry</span></div>
+    </div>
+
+    <div class="callout">
+      <span class="callout-label">— NOTE —</span>
+      <p class="callout-text">
+        the motivated variant takes priority over the dark variant if both conditions are met.
+        taunting at 80+ concentration and then completing the chain gives you motivated,
+        not dark. vergil choosing to feel something overrides vergil feeling nothing.
+        this is intentional.
+      </p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- CHARACTER INTERACTIONS -->
+  <div class="section">
+    <span class="section-label">— SECTION IV —</span>
+    <div class="section-title">CHARACTER MECHANICS</div>
+
+    <div class="entry">
+      <div class="entry-trigger">
+        <span class="trigger-word blue">BLUE ROSE CHARGE</span>
+        <span class="trigger-condition">nero · press blue rose twice</span>
+      </div>
+      <div class="entry-desc">
+        first press charges. button pulses blue. you have three seconds to fire.
+        second press releases a full charged beam — three overlapping screen tears,
+        warp, shake. if you wait too long without firing: "charge lost — you snooze you lose."
+        very nero.
+      </div>
+      <div class="entry-reward">reward — <span>+13 combo · charged beam VFX · announce</span></div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-trigger">
+        <span class="trigger-word blue">EXCEED ENGINE</span>
+        <span class="trigger-condition">nero · build exceed gauge with red queen</span>
+      </div>
+      <div class="entry-desc">
+        the red queen buttons change colour based on your exceed gauge.
+        30+ gauge — orange pulse. 60+ gauge — red flicker, engine overheating.
+        100 gauge — full white-orange fire, box shadow blazing.
+        exceed slash at 30+ consumes the gauge for a major hit.
+        at 100 gauge the showdown button begins screaming at you.
+      </div>
+      <div class="entry-reward">reward — <span>visual feedback · exceed slash bonus damage · showdown unlock</span></div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-trigger">
+        <span class="trigger-word purple">DOPPELGANGER</span>
+        <span class="trigger-condition">vergil · unlock in shop · press doppelganger</span>
+      </div>
+      <div class="entry-desc">
+        toggles the spectral clone. while active, all damage multiplied by 1.75.
+        the doppelganger indicator appears on the right side of the screen and pulses.
+        activating devil trigger while doppelganger is active dismisses it — vergil
+        cannot sustain both states. he has to choose.
+      </div>
+      <div class="entry-reward">reward — <span>×1.75 damage multiplier on all moves while active</span></div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-trigger">
+        <span class="trigger-word">VERGIL TAUNT BONUS</span>
+        <span class="trigger-condition">vergil · press taunt</span>
+      </div>
+      <div class="entry-desc">
+        unlike dante and nero whose taunts cost combo, vergil's taunt
+        builds concentration by +25. the announce is "motivation — concentration surge!"
+        taunting as vergil is a tactical decision, not showboating.
+        also starts the 10-second window for the motivated JCE variant.
+      </div>
+      <div class="entry-reward">reward — <span>+25 concentration · starts motivated JCE timer</span></div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- BUTTON EASTER EGGS -->
+  <div class="section">
+    <span class="section-label">— SECTION V —</span>
+    <div class="section-title">BUTTON COMBO SECRETS</div>
+
+    <p class="footnote" style="margin-bottom:28px;">
+      separate from the keyboard system. these fire from the first letter of each move
+      you press. the buffer tracks up to 8 letters.
+    </p>
+
+    <div class="table-wrap">
+      <div class="table-row">
+        <div class="table-col-a">JACKPOT</div>
+        <div class="table-col-b">+500 score · +50 orbs · slash burst in gold</div>
+      </div>
+      <div class="table-row">
+        <div class="table-col-a purple">VERGIL</div>
+        <div class="table-col-b">+300 score · +30 orbs · "brother?" · purple slash burst</div>
+      </div>
+      <div class="table-row">
+        <div class="table-col-a orange">PIZZA</div>
+        <div class="table-col-b">+200 score · +20 orbs · "never order pineapple."</div>
+      </div>
+      <div class="table-row">
+        <div class="table-col-a white">SPARDA</div>
+        <div class="table-col-b">+999 score · +99 orbs · "LEGEND OF SPARDA!!!"</div>
+      </div>
+      <div class="table-row">
+        <div class="table-col-a">DMC</div>
+        <div class="table-col-b">+400 score · +40 orbs · "DEVIL MAY CRY!"</div>
+      </div>
+      <div class="table-row">
+        <div class="table-col-a blue">NERO</div>
+        <div class="table-col-b">+250 score · +25 orbs · "that's my boy."</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- SDT DANTE -->
+  <div class="section">
+    <span class="section-label">— SECTION VI —</span>
+    <div class="section-title">SIN DEVIL TRIGGER — DANTE</div>
+
+    <p class="footnote" style="margin-bottom:28px;">
+      activate sin DT to fill the SDT gauge. six unlockable moves appear.
+      each costs gauge. use them before it drains.
+    </p>
+
+    <div class="table-wrap">
+      <div class="table-row">
+        <div class="table-col-a">MAJIN SPIKE</div>
+        <div class="table-col-b">wrist spike six-punch combo. ground crack. costs 8 gauge.</div>
+      </div>
+      <div class="table-row">
+        <div class="table-col-a">SDT FIREWORKS</div>
+        <div class="table-col-b">18 homing rockets then mega explosion. costs 15 gauge.</div>
+      </div>
+      <div class="table-row">
+        <div class="table-col-a">GRAVITY WELL</div>
+        <div class="table-col-b">black hole cinematic. everything collapses inward then detonates. costs 25 gauge.</div>
+      </div>
+      <div class="table-row">
+        <div class="table-col-a">MAJIN RUSH</div>
+        <div class="table-col-b">12-slash barrage across screen, wrist spike finisher. costs 20 gauge.</div>
+      </div>
+      <div class="table-row">
+        <div class="table-col-a">SPARDA DRAGON</div>
+        <div class="table-col-b">darkness floods, 14-segment serpentine ghost tears screen. costs 40 gauge.</div>
+      </div>
+      <div class="table-row">
+        <div class="table-col-a">REBELLION AWAKENING</div>
+        <div class="table-col-b">the lore move. blade in chest, DSD is born. biggest shatter in the game. costs 35 gauge.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- FLOATING QUOTES -->
+  <div class="section">
+    <span class="section-label">— SECTION VII —</span>
+    <div class="section-title">THE QUOTES</div>
+
+    <p class="footnote" style="margin-bottom:18px;">
+      76 quotes across four pools. they float across the background while you play.
+      each character has their own pool. each quote has a colour, a size, and an animation style.
+    </p>
+
+    <div class="callout">
+      <span class="callout-label">— ANIMATION STYLES —</span>
+      <p class="callout-text">
+        <strong style="color:#cc2244;letter-spacing:2px;">SLAM</strong> — crashes in large and bold, pulses once, fades slowly. used for the heavy ones.<br><br>
+        <strong style="color:#cc2244;letter-spacing:2px;">SLIDE</strong> — drifts in from the left edge and floats right like a subtitle.<br><br>
+        <strong style="color:#cc2244;letter-spacing:2px;">DRIFT</strong> — gentle fade in and out with a slight tilt. the background texture.
+      </p>
+    </div>
+
+    <div class="table-wrap" style="margin-top:18px;">
+      <div class="table-row">
+        <div class="table-col-a">DANTE</div>
+        <div class="table-col-b" style="color:#cc2244;opacity:0.8;">26 quotes · reds and oranges · arrogance and chaos</div>
+      </div>
+      <div class="table-row">
+        <div class="table-col-a purple">VERGIL</div>
+        <div class="table-col-b" style="color:#9966ff;opacity:0.8;">20 quotes · cold purples · "..." at size 22px is its own category</div>
+      </div>
+      <div class="table-row">
+        <div class="table-col-a blue">NERO</div>
+        <div class="table-col-b" style="color:#4488ff;opacity:0.8;">16 quotes · blues · aggressive, loud, protective</div>
+      </div>
+      <div class="table-row">
+        <div class="table-col-a gold">UNIVERSE</div>
+        <div class="table-col-b" style="color:#cc8844;opacity:0.8;">14 quotes · shared by all · lore and atmosphere</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- HIDDEN NOTES -->
+  <div class="section">
+    <span class="section-label">— APPENDIX —</span>
+    <div class="section-title">THINGS NOBODY TOLD YOU</div>
+
+    <div class="entry">
+      <div class="entry-trigger">
+        <span class="trigger-word" style="font-size:10px;">THE PERFECT BADGE</span>
+      </div>
+      <div class="entry-desc">
+        the "PERFECT" badge in the top right corner of the screen flashes on a rhythm.
+        hitting any move during that flash window gives a perfect timing bonus.
+        +3 combo, +2 orbs, +60 score, and a gold announce. it pulses every 880ms.
+        if you chain perfects, the bonus scales up.
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-trigger">
+        <span class="trigger-word" style="font-size:10px;">VARIETY BONUS</span>
+      </div>
+      <div class="entry-desc">
+        the game tracks your last 5 moves. hitting the same button repeatedly
+        gives less. mixing weapons and moves gives a variety multiplier up to +60%.
+        the variety bar shows you how stylish you're being.
+        playing like you actually know what you're doing is mechanically rewarded.
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-trigger">
+        <span class="trigger-word" style="font-size:10px;">DEVIL BREAKER BREAK</span>
+        <span class="trigger-condition">nero</span>
+      </div>
+      <div class="entry-desc">
+        every devil breaker visually breaks when used. the button goes struck-through
+        and faded, crack lines fly off it. it recharges after 5 seconds.
+        this is purely visual — but it tells you exactly what you just spent.
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-trigger">
+        <span class="trigger-word" style="font-size:10px;">DANTE BULLET CINEMATIC</span>
+      </div>
+      <div class="entry-desc">
+        fire ebony and ivory six or more times in quick succession.
+        if the bullet count hits the threshold, a cinematic fires automatically —
+        no warning, no input. bullet holes appear on screen, a jackpot quote blazes in,
+        everything shatters. it's not a move. it just happens when you push dante's guns far enough.
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-trigger">
+        <span class="trigger-word" style="font-size:10px;">CONCENTRATION RESETS ON DT</span>
+        <span class="trigger-condition">vergil</span>
+      </div>
+      <div class="entry-desc">
+        activating devil trigger as vergil resets concentration to zero.
+        he is getting emotional. the game punishes this. play without DT
+        and concentration compounds — every cut hits harder, every chain is worth more.
+        the dark JCE variant requires 80+ concentration, which means playing restrained.
+        the game is telling you something about the character.
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="divider">
+
+  <!-- FURTHER NOTES -->
+  <div class="section">
+    <span class="section-label">— FURTHER NOTES —</span>
+    <div class="section-title">FROM THE DEVELOPER</div>
+
+    <p style="font-size:11px;line-height:2.6;color:#886677;letter-spacing:1px;max-width:620px;transform:rotate(-0.3deg);display:block;">
+      so this had taken me a while learning all of the different functions aaand
+      how to create different effects and overall it has been a very fun project for me
+      which took around... lets say 2 to 3 months from the genius of my brother
+      and my dad, soon hoped to be good computsists meanwhile i am not...
+      there were too many bugs in the place.. yet they were overcome..
+      thanks for playing !!!
+    </p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- GAME RECOMMENDATION -->
+  <div class="section">
+    <span class="section-label">— ONE MORE THING —</span>
+    <div class="section-title">SERIOUSLY PLAY THE GAMES</div>
+
+    <p style="font-size:11px;line-height:2.6;color:#886677;letter-spacing:1px;max-width:620px;transform:rotate(0.2deg);display:block;">
+      if you havent everrr played devil may cry i like suggets you dont play DMC1 cus
+      its kind of ahh and play DMC3 and 5.. and if you have time get 4 because
+      thats where nero is introduced... like also id been a fan of devil may cry
+      for a while now ( mainly due to my brother and all) and well yeah...
+      seriosuly try the games out ig :3
+    </p>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-title">DEVIL MAY CRY</div>
+    <p class="footer-text">
+      built with love, javascript, and too many setTimeouts.<br>
+      characters: dante · nero · vergil<br>
+      // TODO: add more lines here at some point lol<br><br>
+      <span style="color:#220010;">— end of document —</span>
+    </p>
+  </div>
+
+</div>
+</body>
+</html>
